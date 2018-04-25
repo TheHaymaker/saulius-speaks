@@ -20,6 +20,26 @@
             position: relative;
         }
 
+        .bazinga {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: calc(100% - 40px);
+            padding: 50px;
+            font-size: 22px;
+            box-sizing: border-box;
+            margin: 20px;
+            text-transform: uppercase;
+            background-color: lightblue;
+            border: none;
+            transition: 0.25s all ease;
+        }
+
+        .bazinga:hover {
+            opacity: 0.8;
+            background-color: #ead787;
+        }
+
         .face {
             position: absolute;
             top: 0;
@@ -106,10 +126,18 @@
             <img class="face mouth" src="mouth.png" alt="">
             <img class="face jaw" src="jaw.png" alt="">
         </div>
+        <button class="bazinga">How am I called?</button>
     </div>
 
 
     <script>
+
+
+        var btn = document.querySelector('.bazinga');
+        btn.addEventListener('click', function (e) {
+            var audio = new Audio('saulius.m4a');
+            audio.play();
+        })
 
         // if (navigator.mediaDevices) {
         //     console.log('getUserMedia supported.');
@@ -212,7 +240,9 @@
             video: false
         };
 
+
         function handleSuccess(stream) {
+
             // Put variables in global scope to make them available to the
             // browser console.
             window.stream = stream;
@@ -227,6 +257,7 @@
                     console.log
                     if (soundMeter.instant.toFixed(2) > 0) {
                         jaw.classList.add('active');
+
                         for (let i = 0; i < jawCopies.length; i++) {
                             jawCopies[i].classList.add('active');
                         }
@@ -235,6 +266,8 @@
                         for (let i = 0; i < jawCopies.length; i++) {
                             jawCopies[i].classList.remove('active');
                         }
+
+
 
                     }
                     // slowMeter.value = slowValueDisplay.innerText =
