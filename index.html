@@ -8,6 +8,10 @@
     <title>Saulius Talks</title>
 
     <style>
+
+        html body * {
+            box-sizing: border-box;
+        }
         #container {
             width: 100%;
             max-width: 800px;
@@ -60,6 +64,48 @@
             transform-origin: 50%;
         }
 
+        .eyes {
+            opacity: 0;
+            /* transform: scale(0.9) translate(-50%, 9px); */
+            -webkit-transition: 0.3s -webkit-transform ease-in-out, 0.2s opacity ease-in-out;
+            transition: 0.3s -webkit-transform ease-in-out, 0.2s opacity ease-in-out;
+            -o-transition: 0.3s transform ease-in-out, 0.2s opacity ease-in-out;
+            transition: 0.3s transform ease-in-out, 0.2s opacity ease-in-out;
+            transition: 0.3s transform ease-in-out, 0.3s -webkit-transform ease-in-out, 0.2s opacity ease-in-out;
+        }
+
+        .eyes.active {
+            opacity: 1;
+            /* transform: scale(1) translate(-50%, 9px); */
+            animation: 0.25s shake ease infinite alternate;
+        }
+
+        @keyframes shake {
+            20% {
+                -webkit-transform: translate(-50.5%, 0.5%);
+                -ms-transform: translate(-50.5%, 0.5%);
+                transform: translate(-50.5%, 0.5%);
+            }
+
+            40% {
+                -webkit-transform: translate(-49.75%, 0%);
+                -ms-transform: translate(-49.5%, 0%);
+                transform: translate(-49.5%, 0%);
+            }
+
+            60% {
+                -webkit-transform: translate(-49.5%, -0.5%);
+                -ms-transform: translate(-49.5%, -0.5%);
+                transform: translate(-49.5%, -0.5%);
+            }
+
+            80% {
+                -webkit-transform: translate(-49.75%, 0%);
+                -ms-transform: translate(-49.75%, 0%);
+                transform: translate(-49.75%, 0%);
+            }
+        }
+
         .jaw.active {
             -webkit-transition: 0.3s -webkit-transform ease-in-out;
             transition: 0.3s -webkit-transform ease-in-out;
@@ -82,7 +128,8 @@
         .jaw-copy-9,
         .jaw-copy-10,
         .jaw-copy-11,
-        .jaw-copy-12 {
+        .jaw-copy-12 { 
+            opacity: 0.3;
             -webkit-transform: translate(-49.7%, -9px);
             -ms-transform: translate(-49.7%, -9px);
             transform: translate(-49.7%, -9px);
@@ -93,77 +140,21 @@
             transition: 0.18s transform ease-in-out, 0.18s -webkit-transform ease-in-out;
         }
 
-        /* .jaw-copy-1.active {
-            -webkit-transform: translate(-50%, 10px);
-            -ms-transform: translate(-50%, 10px);
-            transform: translate(-50%, 10px);
+        .jaw-copy-1,
+        .jaw-copy-2,
+        .jaw-copy-3,
+        .jaw-copy-4,
+        .jaw-copy-5,
+        .jaw-copy-6 {
+            opacity: 0.5;
         }
 
-        .jaw-copy-2.active {
-            -webkit-transform: translate(-50%, 20px);
-            -ms-transform: translate(-50%, 20px);
-            transform: translate(-50%, 20px);
+        .jaw-copy-3,
+        .jaw-copy-12 {
+            opacity: 1;
         }
 
-        .jaw-copy-3.active {
-            -webkit-transform: translate(-50%, 30px);
-            -ms-transform: translate(-50%, 30px);
-            transform: translate(-50%, 30px);
-        }
-
-        .jaw-copy-4.active {
-            -webkit-transform: translate(-50%, 35px);
-            -ms-transform: translate(-50%, 35px);
-            transform: translate(-50%, 35px);
-        }
-
-        .jaw-copy-5.active {
-            -webkit-transform: translate(-50%, 38px);
-            -ms-transform: translate(-50%, 38px);
-            transform: translate(-50%, 38px);
-        }
-
-        .jaw-copy-6.active {
-            -webkit-transform: translate(-50%, 40px);
-            -ms-transform: translate(-50%, 40px);
-            transform: translate(-50%, 40px);
-        }
-
-        .jaw-copy-7.active {
-            -webkit-transform: translate(-50%, 5px);
-            -ms-transform: translate(-50%, 5px);
-            transform: translate(-50%, 5px);
-        }
-
-        .jaw-copy-8.active {
-            -webkit-transform: translate(-50%, 25px);
-            -ms-transform: translate(-50%, 25px);
-            transform: translate(-50%, 25px);
-        }
-
-        .jaw-copy-9.active {
-            -webkit-transform: translate(-50%, 28px);
-            -ms-transform: translate(-50%, 28px);
-            transform: translate(-50%, 28px);
-        }
-
-        .jaw-copy-10.active {
-            -webkit-transform: translate(-50%, 32px);
-            -ms-transform: translate(-50%, 32px);
-            transform: translate(-50%, 32px);
-        }
-
-        .jaw-copy-11.active {
-            -webkit-transform: translate(-50%, 36px);
-            -ms-transform: translate(-50%, 36px);
-            transform: translate(-50%, 36px);
-        }
-
-        .jaw-copy-12.active {
-            -webkit-transform: translate(-50%, 40px);
-            -ms-transform: translate(-50%, 40px);
-            transform: translate(-50%, 40px);
-        } */
+        
     </style>
 </head>
 
@@ -187,6 +178,7 @@
             <img class="face jaw-copy jaw-copy-12" src="jaw-copy.png" alt="">
             <img class="face mouth" src="mouth.png" alt="">
             <img class="face jaw active" src="jaw.png" alt="">
+            <img class="face eyes" src="eyes.png" alt="">
         </div>
         <button class="bazinga">How am I called?</button>
     </div>
@@ -288,6 +280,7 @@
 
         var jawCopies = document.querySelectorAll('.jaw-copy');
         var jaw = document.querySelector('.jaw');
+        var eyes = document.querySelector('.eyes');
 
         try {
             window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -322,40 +315,43 @@
                         if (volume > 0.01 && volume <= 0.07) {
                             volume = -56 + 9;
                             partition = 56 + volume;
+                            eyes.classList.remove('active');
                         } else if (volume > 0.07 && volume <= 0.15) {
                             volume = -56 + 15;
                             partition = 56 + volume;
-                            // increase size of eyes a little
+                            eyes.classList.remove('active');
 
                         }else if (volume > 0.15 && volume <= 0.2) {
                             volume = -56 + 28;
                             partition = 56 + volume;
-                            // increase size of eyes a little
+                            eyes.classList.remove('active');
 
                         } else if (volume > 0.2 && volume <= 0.3) {
                             volume = -56 + 40;
                             partition = 56 + volume;
-                            // increase size of eyes a little
+                            eyes.classList.remove('active');
 
                         } else if (volume > 0.3 && volume <= 0.35) {
                             volume = -56 + 45;
                             partition = 56 + volume;
-                            // increase size of eyes a little
+                            eyes.classList.remove('active');
 
                         }else if (volume > 0.35 && volume <= 0.4) {
                             volume = -56 + 50;
                             partition = 56 + volume;
-                            // increase size of eyes a little
+                            eyes.classList.remove('active');
 
                         } else if (volume > 0.4) {
                             volume = -0.5;
                             partition = 56 + volume;
+                            eyes.classList.add('active');
                             // add class to jaw to make it vibrate
                             // increase size of eyes a lot
                             // add class to eyes to make them vibrate
                         } else {
                             volume = -56;
                             partition = 0;
+                            eyes.classList.remove('active');
                         }
 
                         jaw.style.transform = `translate(-50%, ${volume}px)`;
