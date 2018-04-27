@@ -60,16 +60,10 @@
             transform-origin: 50%;
         }
 
-        .jaw {
+        .jaw.active {
             -webkit-transform: translate(-50%, -56px);
             -ms-transform: translate(-50%, -56px);
             transform: translate(-50%, -56px);
-        }
-
-        .jaw.active {
-            -webkit-transform: translate(-50%, 0px);
-            -ms-transform: translate(-50%, 0px);
-            transform: translate(-50%, 0px);
         }
 
         .jaw-copy-1.active {
@@ -165,7 +159,7 @@
             <img class="face jaw-copy jaw-copy-11" src="jaw-copy.png" alt="">
             <img class="face jaw-copy jaw-copy-12" src="jaw-copy.png" alt="">
             <img class="face mouth" src="mouth.png" alt="">
-            <img class="face jaw" src="jaw.png" alt="">
+            <img class="face jaw active" src="jaw.png" alt="">
         </div>
         <button class="bazinga">How am I called?</button>
     </div>
@@ -295,27 +289,93 @@
                 }
                 setInterval(function () {
                     // instantMeter.value = instantValueDisplay.innerText =
-                    console.log
-                    if (soundMeter.instant.toFixed(2) > 0) {
-                        jaw.classList.add('active');
+                    
+                        console.log(soundMeter.instant);
+                        // 0.015730162864017933
+                        // 0.021425473338255282
+                        // 0.010871963114535728
+                        // 0.02093955572560396
+                        // 0.018135978992109964
+                        // 0.005332137809410883
+                        // 0.017391060866667148
+                        // 0.013599431251122262
+                        // 0.010614320373120706
+                        // 0.2137116039484512
+                        // 0.03864983727628522
+                        // 0.27809072152758835
+                        // 0.010876275604018739
+                        // 0.005078355484697844
+                        // 0.0074238753563841756
+                        // 0.07257881765035408
+                        // 0.15001797670301445
+                        // 0.023085055754619808
+                        // 0.017475207176909417
+                        // 0.012696484408898739
+                        // 0.023916314512087783
+                        // 0.03670720561699645
+                        // 0.019833413231919745
+                        // 0.03208414031690766
+                        // 0.03354746682586665
+                        // 0.020131652256890238
+                        // 0.009092510479171282
+                        // 0.02371104164073711
+                        // 0.19639804384237144
+                        // 0.21892125534844936
+                        // 0.01297139957643322
+                        // 0.005776090882328711
+                        // 0.008198582913802167
+                        // 0.010627397380189304
+                        // 0.013176238015983003
+                        // 0.007082214186584923
+                        // 0.010349619952609206
+                        // 0.00651314658840101
+                        // 0.009500893190740652
+                        // 0.008346484312303119
+                        // 0.010636392178545288
+                        // 0.005077326760454361
+                        // 0.007580343048681474
+                        // 0.1395451971615012
+                        // 0.4151977793715223
+                        // 0.26126327581632447
+                        // 0.006042116528009027
+                        // 0.0071245488861517514
+                        let volume = soundMeter.instant;
 
-                        for (let i = 0; i < jawCopies.length; i++) {
-                            jawCopies[i].classList.add('active');
+                        if (volume > 0.01 && volume <= 0.3) {
+                            volume = -56 + (volume * 500);
+                        } else if (volume > 0.3 && volume <= 0.4) {
+                            volume = -56 + (volume * 500);
+                            // increase size of eyes a little
+
+                        } else if (volume > 0.4) {
+                            volume = 0;
+                            // add class to jaw to make it vibrate
+                            // increase size of eyes a lot
+                            // add class to eyes to make them vibrate
+                        } else {
+                            volume = -56;
                         }
-                    } else {
-                        jaw.classList.remove('active');
-                        for (let i = 0; i < jawCopies.length; i++) {
-                            jawCopies[i].classList.remove('active');
-                        }
+
+                        jaw.style.transform = `translate(-50%, ${volume}px)`;
+                        // jaw.classList.add('active');
+
+                        // for (let i = 0; i < jawCopies.length; i++) {
+                        //     jawCopies[i].classList.add('active');
+                        // }
+                        // } else {
+                        //     jaw.classList.remove('active');
+                        // for (let i = 0; i < jawCopies.length; i++) {
+                        //     jawCopies[i].classList.remove('active');
+                        // }
+                    
 
 
-
-                    }
+                    // }
                     // slowMeter.value = slowValueDisplay.innerText =
                     //     soundMeter.slow.toFixed(2);
                     // clipMeter.value = clipValueDisplay.innerText =
                     //     soundMeter.clip;
-                }, 200);
+                }, 100);
             });
         }
 
